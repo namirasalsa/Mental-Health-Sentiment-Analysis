@@ -1,10 +1,8 @@
-streamlit==1.35.0
-json
-tensorflow
+streamlit==1.36.0
+tensorflow==2.16.1
 numpy
-base64
-PIL
+pillow
 pandas
 plotly
 scikit-learn
-streamlit_option_menu
+streamlit-option-menu
