@@ -1,0 +1,10 @@
+streamlit==1.35.0
+pickle
+json
+tensorflow
+numpy
+base64
+PIL
+pandas
+plotly
+streamlit_option_menu
