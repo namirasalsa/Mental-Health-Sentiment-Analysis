@@ -1,5 +1,4 @@
 streamlit==1.35.0
-pickle
 json
 tensorflow
 numpy
@@ -7,4 +6,5 @@ base64
 PIL
 pandas
 plotly
+scikit-learn
 streamlit_option_menu
