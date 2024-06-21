@@ -148,6 +148,7 @@
 import streamlit as st
 import pickle
 import json
+import time
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import tokenizer_from_json
@@ -187,7 +188,7 @@ except Exception as e:
 # Load RNN model
 rnn_model = None
 try:
-    rnn_model = load_model('model/rnn.keras')
+    rnn_model = load_model('model/rnn_model.keras')
     st.write("RNN model loaded successfully.")
 except Exception as e:
     st.error(f"Error loading RNN model: {e}")
@@ -239,10 +240,14 @@ def predict_sentiment_rnn(text):
     try:
         preprocessed_text = preprocess_text(text)
         if preprocessed_text is not None:
+            time.sleep(0.1)  # Add a small delay
             prediction = rnn_model.predict(preprocessed_text)
             return np.argmax(prediction, axis=1)[0]
         else:
             return None
+    except BrokenPipeError as e:
+        st.error(f"Broken pipe error in RNN prediction: {e}")
+        return None
     except Exception as e:
         st.error(f"Error in RNN prediction: {e}")
         return None
