@@ -185,11 +185,13 @@ except Exception as e:
     st.error(f"Error loading SVM model: {e}")
 
 # Load RNN model
+rnn_model = None
 try:
     rnn_model = load_model('model/rnn_model.keras')
     st.write("RNN model loaded successfully.")
 except Exception as e:
     st.error(f"Error loading RNN model: {e}")
+    rnn_model = None
 
 # Load tokenizer
 try:
@@ -230,6 +232,10 @@ def preprocess_text(text):
 
 # Function to predict sentiment using RNN
 def predict_sentiment_rnn(text):
+    if rnn_model is None:
+        st.error("RNN model is not loaded.")
+        return None
+    
     try:
         preprocessed_text = preprocess_text(text)
         if preprocessed_text is not None:
