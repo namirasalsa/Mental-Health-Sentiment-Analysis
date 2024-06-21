@@ -187,7 +187,7 @@ except Exception as e:
 # Load RNN model
 rnn_model = None
 try:
-    rnn_model = load_model('model/rnn_model.keras')
+    rnn_model = load_model('model/rnn.keras')
     st.write("RNN model loaded successfully.")
 except Exception as e:
     st.error(f"Error loading RNN model: {e}")
