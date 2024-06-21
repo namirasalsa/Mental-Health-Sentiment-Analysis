@@ -145,7 +145,6 @@
 
 #     if st.button("Compare Model Accuracies"):
 #         compare_models()
-
 import streamlit as st
 import pickle
 import json
@@ -211,21 +210,36 @@ except Exception as e:
 
 # Function to predict sentiment using SVC
 def predict_sentiment_svc(text):
-    text_vectorized = vectorizer.transform([text])
-    prediction = svc_model.predict(text_vectorized)
-    return prediction[0]
+    try:
+        text_vectorized = vectorizer.transform([text])
+        prediction = svc_model.predict(text_vectorized)
+        return prediction[0]
+    except Exception as e:
+        st.error(f"Error in SVC prediction: {e}")
+        return None
 
 # Function to preprocess text for RNN
 def preprocess_text(text):
-    sequences = tokenizer.texts_to_sequences([text])
-    padded = pad_sequences(sequences, maxlen=100)  # Use appropriate maxlen
-    return padded
+    try:
+        sequences = tokenizer.texts_to_sequences([text])
+        padded = pad_sequences(sequences, maxlen=100)  # Use appropriate maxlen
+        return padded
+    except Exception as e:
+        st.error(f"Error in text preprocessing: {e}")
+        return None
 
 # Function to predict sentiment using RNN
 def predict_sentiment_rnn(text):
-    preprocessed_text = preprocess_text(text)
-    prediction = rnn_model.predict(preprocessed_text)
-    return np.argmax(prediction, axis=1)[0]
+    try:
+        preprocessed_text = preprocess_text(text)
+        if preprocessed_text is not None:
+            prediction = rnn_model.predict(preprocessed_text)
+            return np.argmax(prediction, axis=1)[0]
+        else:
+            return None
+    except Exception as e:
+        st.error(f"Error in RNN prediction: {e}")
+        return None
 
 # Streamlit app
 st.title('Mental Health Sentiment Analysis')
